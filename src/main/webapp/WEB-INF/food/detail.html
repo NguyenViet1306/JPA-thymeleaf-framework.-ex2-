@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="/layout :: head">
+    <title>Title</title>
+</head>
+<body>
+<div class="container">
+    <h1>Food detail</h1>
+    <table class="table table-striped" th:object="${food}">
+        <tr>
+            <th>Name Food</th>
+            <th>Price</th>
+            <th>Image</th>
+            <th>Description</th>
+            <th>Category</th>
+            <th id="action" colspan="2">Action</th>
+        </tr>
+        <tr>
+            <td th:text="${food.getName()}"></td>
+            <td th:text="${food.getPrice()}"></td>
+            <td><img width="100px" th:src="@{'../../image/'+ ${food.getImageUrl()}}" alt="Fail"></td>
+            <td th:text="${food.getDescription()}"></td>
+            <td th:text="${food.getCategory().getName()}"></td>
+            <td>
+                <button class="btn btn-warning">
+                    <a th:href="@{/food/detail/update/{id}(id=${food.getId()})}">Update</a>
+                </button>
+            </td>
+            <td>
+                <button class="btn btn-danger">
+                    <a th:href="@{/food/detail/delete/{id}(id=${food.getId()})}">Delete</a>
+                </button>
+            </td>
+        </tr>
+    </table>
+    <button class="btn btn-primary"><a href="/food">Back to home</a></button>
+</div>
+</body>
+</html>

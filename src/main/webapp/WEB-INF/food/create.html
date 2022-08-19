@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="/layout :: head">
+    <title>Title</title>
+</head>
+<body>
+<div class="container">
+    <h1>Create Province</h1>
+<!--    <h2 th:if="${mess} != null" th:text="${mess}"></h2>-->
+    <form method="post" th:object="${food}" enctype="multipart/form-data">
+        <table class="table table-striped">
+            <tr>
+                <th>Name</th>
+                <td><label><input type="text" th:field="*{name}"></label></td>
+            </tr>
+            <tr>
+                <th>Price</th>
+                <td><label><input type="text" th:field="*{price}"></label></td>
+            </tr>
+            <tr>
+                <th>Image</th>
+                <td><label><input type="file" th:field="*{image}"></label></td>
+            </tr>
+            <tr>
+                <th>Description</th>
+                <td><label><input type="text" th:field="*{description}"></label></td>
+            </tr>
+            <tr>
+                <th>Category</th>
+                <td>
+                    <label>
+                        <select th:field="*{category}">
+                            <option th:each="c : ${categories}" th:value="${c.getId()}"
+                                    th:text="${c.getName()}"></option>
+                        </select>
+                    </label>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <button class="btn btn-primary" type="submit"><span>Create</span></button>
+                </td>
+            </tr>
+        </table>
+    </form>
+    <button class="btn btn-primary"><a href="/food">Back to Detail</a></button>
+</div>
+</body>
+</html>

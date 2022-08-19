@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="/layout :: head">
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div class="container">
+    <h1><a href="/food">Menu Food</a></h1>
+    <h2 th:if="${mess} != null" th:text="${mess}"></h2>
+    <div class="row search">
+        <div class="col-6">
+            <button class="btn btn-primary"><a th:href="@{/food/create}"> Create Food </a></button>
+        </div>
+
+        <div class="row-6" >
+            <button class="btn btn-primary"><a th:href="@{/food/find-max-price}">Show Price max</a></button>
+        </div>
+
+        <div class="row-6" >
+            <button class="btn btn-primary"><a th:href="@{/food/find-min-price}">Show Price Min</a></button>
+        </div>
+
+        <div class="row-6" >
+            <button class="btn btn-primary"><a th:href="@{/food/search-avg-price}">Price Avg</a></button>
+        </div>
+
+    </div>
+    <div>
+    <div id="search" class="col-6" >
+        <form th:action="@{/food/search}" method="post">
+            <label><input type="text" name="search"></label>
+            <button class="btn btn-primary" type="submit">Search</button>
+        </form>
+    </div>
+    <div id="searchCategory" class="col-6" >
+        <form th:action="@{/food/search-category}" method="post">
+            <label><input type="text" name="search-by-category"></label>
+            <button class="btn btn-primary" type="submit">Search Category</button>
+        </form>
+    </div>
+    <br>
+    <div>
+        <form th:action="@{/food/between-price}" method="get">
+            <input name="min" type="text" placeholder="Min">
+            <input name="max" type="text" placeholder="Max">
+            <button class="btn btn-primary" type="submit">Click</button>
+        </form>
+    </div>
+    </div>
+    <br>
+
+</div>
+
+<table class="table table-striped btn-td">
+    <tr>
+        <th>Number</th>
+        <th>Name Food</th>
+        <th>Price</th>
+        <th>Image</th>
+        <th>Description</th>
+        <th>Category</th>
+        <th id="action">ACTION</th>
+    </tr>
+    <tr th:each="f,status: ${foods}">
+        <td th:text="${status.count}"></td>
+        <td th:text="${f.getName()}"></td>
+        <td th:text="${f.getPrice()}"></td>
+        <td><img width="100px" th:src="@{'../image/'+ ${f.getImageUrl()}}" alt="Fail"></td>
+        <td th:text="${f.getDescription()}"></td>
+        <td th:text="${f.getCategory().getName()}"></td>
+        <td>
+            <button class="btn btn-info">
+                <a th:href="@{/food/detail/{id}(id=${f.getId()})}">Detail</a>
+            </button>
+        </td>
+    </tr>
+</table>
+<br>
+</div>
+<div class="table-striped">
+    <button th:if="${foods.hasPrevious()}"><a style="color: black"  th:href="@{'/food'(page=${foods.number - 1})}">Previous</a>
+    </button>
+
+    <span style="color: black" th:text="${foods.number + 1}"></span>/<span style="color: black"
+                                                                           th:text="${foods.totalPages}"></span>
+    <button th:if="${foods.hasNext()}"><a style="color: black"  th:href="@{'/food'(page=${foods.number + 1})}">Next</a>
+    </button>
+</div>
+</body>
+</html>
